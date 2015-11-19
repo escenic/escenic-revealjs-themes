@@ -39,7 +39,7 @@ main() {
   pandoc \
     --standalone \
     -f markdown \
-    --variable escenic-theme-css-url=${dir}/../themes/${escenic_theme-dark}/style.css \
+    --variable escenic-theme-css-url=${dir}/../themes/${escenic_theme-light}/style.css \
     --variable revealjs-url=${dir}/../common/reveal.js \
     --variable transition=slide \
     --template ${dir}/../common/pandoc.template \
