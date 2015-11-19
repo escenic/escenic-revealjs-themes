@@ -1,4 +1,4 @@
-@import "../../common/fonts/fonts.css" all;
+@import "../common/fonts/fonts.css" all;
 
 body {
   background-image: url("escenic-logo.svg");
@@ -26,7 +26,7 @@ body {
   letter-spacing: normal;
   /* text-shadow: 2px 2px 2px #cccccc; */
   word-wrap: break-word;
-  font-family: helvetica-neue-condensed-bold, 'sans-serif';
+  font-family: helvetica-neue-thin, Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .reveal h1 {
@@ -122,8 +122,8 @@ blockquote p:after {
 }
 
 .reveal blockquote p:first-child, .reveal blockquote p:last-child {
-                                    display: inline-block;
-                                  }
+  display: inline-block;
+}
 
 .reveal pre {
   display: block;

@@ -4,8 +4,17 @@
 
 ```
 $ cd my-slides
-$ /path/to/escenic-revealjs-themes/bin/create-slides [-t <theme>] my-presentation.md
-$ firefox index.html &
+$ /path/to/escenic-revealjs-themes/bin/create-slides \
+  --theme light \
+  --dir /tmp/output \
+  my-presentation.md
+Slides available in /tmp/output/index.html
+```
+
+You can now browse the presentation with:
+
+```
+$ firefox /tmp/output/index.html &
 ```
 
 ## Themes
@@ -23,9 +32,6 @@ You then need some common artifacts in your `common` directory:
     $ cd common
     $ git clone https://github.com/hakimel/reveal.js.git
     $ wget https://gist.githubusercontent.com/ToastShaman/8136059/raw/abd29d4492e047e5553df95a4a9427e8c9cb323d/github.css
-
-See [common/README.md](common/README.md) and
-[common/fonts/README.md](common/fonts/README.md) for further details.
 
 ## Copying
 

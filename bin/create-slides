@@ -10,21 +10,26 @@ show_usage_and_exit() {
 Usage: $(basename $0) [OPTIONS] <slides.md>
 
 OPTIONS
+-o --dir   The splides are created in the given directory
 -t --theme The theme as can be found in the 'themes' directory.
 EOF
 }
+
 read_user_input() {
+  escenic_theme=light
+
   if [ $# -eq 0 ]; then
     show_usage_and_exit
   fi
 
-  local OPTS=$(getopt -o t: --long theme: -n 'parse-options' -- "$@")
+  local OPTS=$(getopt -o t:o: --long theme: --long dir: -n 'parse-options' -- "$@")
   if [ $? != 0 ]; then echo "Failed parsing options." >&2 ; exit 1; fi
   eval set -- "$OPTS"
 
   while true; do
     case "$1" in
       -t | --theme ) escenic_theme="$2"; shift 2;;
+      -o | --dir ) output_dir="$2"; shift 2;;
       -- ) shift; break ;;
       * ) break ;;
     esac
@@ -33,19 +38,34 @@ read_user_input() {
   src_file=$@
 }
 
+check_environment() {
+  :
+}
+
 main() {
+  check_environment
   read_user_input "$@"
   local dir=$(dirname $0)
-  pandoc \
-    --standalone \
-    -f markdown \
-    --variable escenic-theme-css-url=${dir}/../themes/${escenic_theme-light}/style.css \
-    --variable revealjs-url=${dir}/../common/reveal.js \
-    --variable transition=slide \
-    --template ${dir}/../common/pandoc.template \
-    -t revealjs \
-    -o index.html \
-    ${src_file}
+
+  mkdir -p ${output_dir}
+  cp -r ${dir}/../themes/${escenic_theme} ${output_dir}
+  cp -r ${dir}/../common ${output_dir}
+  cp ${src_file} ${output_dir}
+  (
+    cd ${output_dir}
+    pandoc \
+      --standalone \
+      -f markdown \
+      --variable escenic-theme-css-url=${escenic_theme}/style.css \
+      --variable revealjs-url=common/reveal.js \
+      --variable transition=slide \
+      --template common/pandoc.template \
+      -t revealjs \
+      -o index.html \
+      ${src_file}
+  )
+
+  echo "Slides available in ${output_dir}/index.html"
 }
 
 main "$@"
