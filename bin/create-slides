@@ -1,0 +1,51 @@
+#! /usr/bin/env bash
+
+# by torstein.k.johansen@gmail.com
+set -o errexit
+set -o nounset
+set -o pipefail
+
+show_usage_and_exit() {
+  cat <<EOF
+Usage: $(basename $0) [OPTIONS] <slides.md>
+
+OPTIONS
+-t --theme The theme as can be found in the 'themes' directory.
+EOF
+}
+read_user_input() {
+  if [ $# -eq 0 ]; then
+    show_usage_and_exit
+  fi
+
+  local OPTS=$(getopt -o t: --long theme: -n 'parse-options' -- "$@")
+  if [ $? != 0 ]; then echo "Failed parsing options." >&2 ; exit 1; fi
+  eval set -- "$OPTS"
+
+  while true; do
+    case "$1" in
+      -t | --theme ) escenic_theme="$2"; shift 2;;
+      -- ) shift; break ;;
+      * ) break ;;
+    esac
+  done
+
+  src_file=$@
+}
+
+main() {
+  read_user_input "$@"
+  local dir=$(dirname $0)
+  pandoc \
+    --standalone \
+    -f markdown \
+    --variable escenic-theme-css-url=${dir}/../themes/${escenic_theme-dark}/style.css \
+    --variable revealjs-url=${dir}/../common/reveal.js \
+    --variable transition=slide \
+    --template ${dir}/../common/pandoc.template \
+    -t revealjs \
+    -o index.html \
+    ${src_file}
+}
+
+main "$@"
