@@ -48,8 +48,8 @@ main() {
   local dir=$(dirname $0)
 
   mkdir -p ${output_dir}
-  cp -r ${dir}/../themes/${escenic_theme} ${output_dir}
-  cp -r ${dir}/../common ${output_dir}
+  cp -f -r ${dir}/../themes/${escenic_theme} ${output_dir}
+  cp -f -r ${dir}/../common ${output_dir}
   cp ${src_file} ${output_dir}
   (
     cd ${output_dir}
