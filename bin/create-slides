@@ -5,18 +5,20 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+
 show_usage_and_exit() {
   cat <<EOF
 Usage: $(basename $0) [OPTIONS] <slides.md>
 
 OPTIONS
--o --dir   The splides are created in the given directory
+-o --dir   The slides are created in the given directory
 -t --theme The theme as can be found in the 'themes' directory.
 EOF
 }
 
 read_user_input() {
   escenic_theme=light
+  output_dir=$(pwd)
 
   if [ $# -eq 0 ]; then
     show_usage_and_exit
@@ -47,12 +49,19 @@ main() {
   read_user_input "$@"
   local dir=$(dirname $0)
 
+
   mkdir -p ${output_dir}
   cp -f -r ${dir}/../themes/${escenic_theme} ${output_dir}
   cp -f -r ${dir}/../common ${output_dir}
-  cp ${src_file} ${output_dir}
+
+  if [[ $1 == "-o" ]]; then
+   cp ${src_file}  ${output_dir}
+  fi
+
   (
     cd ${output_dir}
+
+
     pandoc \
       --standalone \
       -f markdown \
@@ -63,7 +72,10 @@ main() {
       -t revealjs \
       -o index.html \
       ${src_file}
+
   )
+#available transition
+# none/fade/slide/convex/concave/zoom
 
   echo "Slides available in ${output_dir}/index.html"
 }
