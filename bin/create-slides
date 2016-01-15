@@ -5,7 +5,6 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-
 show_usage_and_exit() {
   cat <<EOF
 Usage: $(basename $0) [OPTIONS] <slides.md>
@@ -14,6 +13,7 @@ OPTIONS
 -o --dir   The slides are created in the given directory
 -t --theme The theme as can be found in the 'themes' directory.
 EOF
+  exit 1
 }
 
 read_user_input() {
@@ -37,7 +37,11 @@ read_user_input() {
     esac
   done
 
-  src_file=$@
+  src_file="$*"
+
+  if [ -z "${src_file}" ]; then
+    show_usage_and_exit
+  fi
 }
 
 check_environment() {
@@ -47,25 +51,24 @@ check_environment() {
 main() {
   check_environment
   read_user_input "$@"
-  local dir=$(dirname $0)
+  local dir=
+  dir=$(dirname "$0")
 
+  mkdir -p "${output_dir}"
+  cp -f -r "${dir}/../themes/${escenic_theme}" "${output_dir}"
+  cp -f -r "${dir}/../common" "${output_dir}"
 
-  mkdir -p ${output_dir}
-  cp -f -r ${dir}/../themes/${escenic_theme} ${output_dir}
-  cp -f -r ${dir}/../common ${output_dir}
-
-  if [[ $1 == "-o" ]]; then
-   cp ${src_file}  ${output_dir}
+  if [[ ! ${src_file} -ef ${output_dir}/$(basename ${src_file}) ]]; then
+    cp "${src_file}" "${output_dir}"
   fi
 
   (
     cd ${output_dir}
 
-
     pandoc \
       --standalone \
       -f markdown \
-      --variable escenic-theme-css-url=${escenic_theme}/style.css \
+      --variable escenic-theme-css-url="${escenic_theme}"/style.css \
       --variable revealjs-url=common/reveal.js \
       --variable transition=slide \
       --template common/pandoc.template \
@@ -74,8 +77,8 @@ main() {
       ${src_file}
 
   )
-#available transition
-# none/fade/slide/convex/concave/zoom
+  # available transition
+  # none/fade/slide/convex/concave/zoom
 
   echo "Slides available in ${output_dir}/index.html"
 }
