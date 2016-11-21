@@ -1,5 +1,4 @@
-@import "../common/fonts/fonts.css" all;
-
+@import "https://fonts.googleapis.com/css?family=Raleway" all;
 body {
   background-image: url("escenic-logo.svg");
   background-repeat: no-repeat;
@@ -9,7 +8,7 @@ body {
   background-color: white;
   color: #302a2b;
   font-size: 2em;
-  font-family: helvetica-neue-light, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: Raleway, Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 ::selection {
@@ -26,7 +25,6 @@ body {
   letter-spacing: normal;
   /* text-shadow: 2px 2px 2px #cccccc; */
   word-wrap: break-word;
-  font-family: helvetica-neue-thin, Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .reveal h1 {
@@ -301,27 +299,21 @@ blockquote p:after {
   vertical-align: baseline;
 }
 
-kbd.escenic {
-  -moz-border-radius: 0.2em;
-  -moz-box-shadow: 0.1em 0.2em 0.2em #ddd;
-  -moz-linear-gradient(top, #eee, #f9f9f9, #eee);
-  -o-linear-gradient(top, #eee, #f9f9f9, #eee);
-  -webkit-border-radius: 0.2em;
-  -webkit-box-shadow: 0.1em 0.2em 0.2em #ddd;
-  -webkit-linear-gradient(top, #eee, #f9f9f9, #eee);
-  background-color: #f9f9f9;
-  background-image:
-  background-image:
-  background-image:
-  background-image:
-  border-radius: 0.2em;
-  border: 1px solid #aaa;
-  box-shadow: 0.1em 0.2em 0.2em #ddd;
-  font-family: inherit;
-  font-size: 0.85em;
-  font-weight: bolder;
-  linear-gradient(to bottom, #eee, #f9f9f9, #eee);
-  padding: 0.1em 0.3em;
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc #ccc #bbb;
+  border-image: none;
+  border-radius: 3px;
+  box-shadow: 0 -1px 0 #bbb inset;
 }
 
 .reveal .slides p {

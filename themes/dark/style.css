@@ -301,7 +301,7 @@ blockquote p:after {
   vertical-align: baseline;
 }
 
-kbd.escenic {
+kbd {
   -moz-border-radius: 0.2em;
   -moz-box-shadow: 0.1em 0.2em 0.2em #ddd;
   -moz-linear-gradient(top, #eee, #f9f9f9, #eee);
