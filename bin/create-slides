@@ -58,12 +58,12 @@ main() {
   cp -f -r "${dir}/../themes/${escenic_theme}" "${output_dir}"
   cp -f -r "${dir}/../common" "${output_dir}"
 
-  if [[ ! ${src_file} -ef ${output_dir}/$(basename ${src_file}) ]]; then
+  if [[ ! ${src_file} -ef ${output_dir}/$(basename "${src_file}") ]]; then
     cp "${src_file}" "${output_dir}"
     local dir=
     dir=$(dirname "${src_file}")
-    cp "${dir}/${src_file})/"*.jpg "${output_dir}" 2>/dev/null || true
-    cp "${dir}/${src_file})/"*.png "${output_dir}" 2>/dev/null || true
+    cp "$(dirname "${src_file}")/"*.jpg "${output_dir}" 2>/dev/null || true
+    cp "$(dirname "${src_file}")/"*.png "${output_dir}" 2>/dev/null || true
   fi
 
   (
