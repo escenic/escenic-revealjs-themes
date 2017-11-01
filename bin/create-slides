@@ -74,7 +74,7 @@ main() {
       -f markdown \
       --variable escenic-theme-css-url="${escenic_theme}"/style.css \
       --variable revealjs-url=common/reveal.js \
-      --variable transition=slide \
+      --variable transition=none \
       --template common/pandoc.template \
       -t revealjs \
       -o index.html \
