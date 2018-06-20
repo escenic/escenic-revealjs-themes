@@ -1,3 +1,5 @@
 common/fonts/*.woff
 common/github.css
 common/reveal.js
+common/magula.css
+common/monokai.css
